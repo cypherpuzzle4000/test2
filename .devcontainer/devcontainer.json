@@ -1,0 +1,29 @@
+{
+  "name": "Backend Learning Lab",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.13-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest"
+    }
+  },
+  "forwardPorts": [8000, 5433],
+  "portsAttributes": {
+    "8000": {
+      "label": "Task API",
+      "onAutoForward": "notify"
+    },
+    "5433": {
+      "label": "PostgreSQL playground",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-ossdata.vscode-pgsql",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "postCreateCommand": "docker compose up -d --build && docker compose -f postgres-test/compose.yaml up -d"
+}

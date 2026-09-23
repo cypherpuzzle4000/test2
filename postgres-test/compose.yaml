@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    network_mode: host
+    command: ["postgres", "-c", "port=5433"]
+    environment:
+      POSTGRES_DB: playground
+      POSTGRES_USER: learner
+      POSTGRES_PASSWORD: learner
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 5433 -U learner -d playground"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_test_data:
